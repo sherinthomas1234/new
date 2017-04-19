@@ -1,0 +1,76 @@
+https://demo.firepad.io/#Ji0KJfgVPW
+
+#include<Servo.h>
+Servo motor1;
+Servo motor2;
+Servo motor3;
+Servo motor4;
+void setup() {
+  motor1.attach(13);
+  motor2.attach(12);
+  motor3.attach(11);
+  motor4.attach(10);
+ motor1.writeMicroseconds(1000);
+ motor2.writeMicroseconds(1000);
+ motor3.writeMicroseconds(1000);
+ motor4.writeMicroseconds(1000);
+ Serial.begin(9600);
+  // put your setup code here, to run once:
+
+}
+
+void loop() {
+  int x ,y,z;
+  x=analogRead(A0);
+  Serial.print(x);
+ // delay(1000);
+  Serial.print("\t");
+   if(x>530)
+   {
+    x=map(x,900,1023,500,1900);
+  motor1.writeMicroseconds(x);
+  motor2.writeMicroseconds(x);
+  motor3.writeMicroseconds(x);
+  motor4.writeMicroseconds(x);
+   delay(100);
+   }
+    y=analogRead(A1);
+    // Serial.print(y);
+     //Serial.print("\t");
+      
+    Serial.print(y);
+   Serial.print("\n");
+   if(y>520)
+   {
+    y=map(y,519,1023,0,2500);
+   motor1.writeMicroseconds(y);
+   }
+  if(y<517)
+   {
+    y=map(y,517,0,500,2500);
+     motor3.writeMicroseconds(y);
+   }
+    z=analogRead(A2);
+     Serial.print(z);
+   Serial.print("\t");
+  
+   //Serial.print(z);
+   //Serial.print("\n");
+    if(z>503)
+    {
+       z=map(z,500,1023,500,2500);
+    
+     motor2.writeMicroseconds(z);
+     //motor3.writeMicroseconds(z);
+   }
+  if(z<499)
+   {
+    z=map(z,500,0,0,2500);
+     //motor1.writeMicroseconds(z);
+     motor4.writeMicroseconds(z);
+   }
+    
+   
+   
+ 
+}
