@@ -1,0 +1,91 @@
+#include <SoftwareSerial.h> 
+#include <Servo.h> 
+int ri = false; // keeps track of the desired remote // on/off state 
+int lastri = false; // record of prior remote state 
+unsigned long lastsent = 0; 
+ 
+int val1 =0; 
+int val2 =0; 
+int val3 =0; 
+int val4 =0; 
+
+Servo myservo1; 
+Servo myservo2; 
+Servo myservo3; 
+Servo myservo4; 
+ 
+void setup() { 
+myservo1.attach(12);  //Propeller 
+myservo2.attach(11);  //Radar 
+myservo3.attach(10);  // Aeleron 
+myservo4.attach(9);   // Elevator 
+ 
+  Serial.begin(9600); 
+  pinMode(13, OUTPUT); 
+ 
+} 
+void loop() { 
+  if(Serial.available()>=29) { 
+    if(Serial.read() == 0x7E) { 
+   for(int i=0;i<20;i++){ 
+  Serial.read(); 
+} 
+ 
+byte h1=0; 
+byte l1=0; 
+byte l2=0; 
+byte h2=0; 
+byte l3=0; 
+byte h3=0; 
+byte l4=0; 
+byte h4=0; 
+ 
+h1 = Serial.read(); 
+l1 = Serial.read(); 
+ 
+ 
+h2 = Serial.read(); 
+l2 = Serial.read(); 
+ 
+h3 = Serial.read(); 
+l3 = Serial.read(); 
+ 
+h4 = Serial.read(); 
+l4 = Serial.read(); 
+ 
+val1 = l1 + 256 * h1; 
+val2 = l2 + 256 * h2; 
+ 
+val3 = l3 + 256 * h3; 
+val4 = l4 + 256 * h4; 
+ 
+ 
+int x1 = map(val1,0,1023,0,180); 
+int x2 = map(val2,0,1023,0,180); 
+int x3 = map(val3,0,1023,0,180); 
+int x4 = map(val4,0,1023,0,180); 
+ 
+ 
+Serial.print(x1); 
+Serial.print("-----");
+
+Serial.print(x2); 
+Serial.print("-----"); 
+
+Serial.print(x3); 
+Serial.print("-----");
+ 
+Serial.print(x4); 
+Serial.print("-----");
+ 
+Serial.println("End of data");
+
+ Serial.print(val1); 
+Serial.print("-----"); 
+Serial.print(val2); 
+Serial.print("-----"); 
+Serial.print(val3); 
+Serial.print("-----"); 
+Serial.print(val4); 
+Serial.print("-----"); 
+Serial.println("End of data");
